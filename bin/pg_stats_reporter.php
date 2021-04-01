@@ -49,7 +49,8 @@ $optionInfo = array("list" => false,
     "endid" => NULL,
     "begindate" => NULL,
     "enddate" => NULL,
-    "outputdir" => NULL);
+    "outputdir" => NULL,
+    "onlybody" => NULL);
 $optionList = array("l" => "list",
     "L" => "dblist",
     "s" => "size",
@@ -885,8 +886,9 @@ function createSmartyInstance($installDir, $outputdir, $tmpDir)
     /* Set each directory */
     $smarty->caching = Smarty::CACHING_OFF;
     $smarty->compile_check = false;
-    $smarty->template_dir = joinPathComponents($installDir, "pg_stats_reporter_lib/template");
-    $smarty->compile_dir = $tmpDir . "/compiled";
+    $smarty->setTemplateDir(joinPathComponents($installDir, "pg_stats_reporter_lib/template"));
+    $smarty->setCompileDir('/tmp/smarty/compiled');
+//    $smarty->compile_dir = $tmpDir . "/compiled";
 
     /* Assign library path */
     $smarty->assign("jquery_path", JQUERY_PATH);

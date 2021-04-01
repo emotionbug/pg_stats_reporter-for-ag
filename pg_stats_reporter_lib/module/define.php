@@ -12,7 +12,7 @@ define("PROGRAM_VERSION", "10.0");
 define("IMAGE_FILE", "pgsql_banner01.png");
 
 // Library path
-define("SMARTY_PATH", "package/Smarty-3.1.30/libs/");
+define("SMARTY_PATH", "package/smarty-3.1.39/libs/");
 define("JQUERY_PATH", "package/jquery-3.2.1.min.js");
 define("JQUERYUI_PATH", "package/jquery-ui-1.12.1.custom/");
 define("TIMEPICKER_PATH", "package/jquery-ui-timepicker-addon-1.6.3/");
