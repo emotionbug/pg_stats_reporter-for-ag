@@ -136,7 +136,8 @@ $combinationCheckList = array("list" => array("dblist",
         "endid"),
     "outputdir" => array("list",
         "dblist",
-        "size"));
+        "size"),
+    "onlybody" => array());
 
 /* setup signal handlers */
 if (PHP_OS == "Linux") {
@@ -518,6 +519,11 @@ function parseCommandOptions(&$optionInfo)
                 case "all":
                     $optionInfo[$opt_array[0]] = true;
                     break;
+                case "host":
+                case "port":
+                case "username":
+                case "password":
+                case "dbname":
                 case "repositorydb":
                 case "instid":
                 case "beginid":
@@ -653,18 +659,11 @@ function initInformationFileForCommandline($infoData, &$err_msg, $config_cache_f
         }
 
         // make database connection string
-        $connect_str = "";
-        if (array_key_exists('host', $data_array))
-            $connect_str = "host=" . $data_array['host'];
-        if (array_key_exists('port', $data_array))
-            $connect_str .= " port=" . $data_array['port'];
-        if (array_key_exists('dbname', $data_array))
-            $connect_str .= " dbname=" . $data_array['dbname'];
-        if (array_key_exists('username', $data_array))
-            $connect_str .= " user=" . $data_array['username'];
-        if (array_key_exists('password', $data_array)
-            && $data_array['password'] != "")
-            $connect_str .= " password=" . $data_array['password'];
+        $connect_str = "host=" . $optionInfo['host'];
+        $connect_str .= " port=" . $optionInfo['port'];
+        $connect_str .= " dbname=" . $optionInfo['dbname'];
+        $connect_str .= " user=" . $optionInfo['username'];
+        $connect_str .= " password=" . $optionInfo['password'];
         $connect_str .= " connect_timeout=5";
 
         // connect repository database and get target database information
