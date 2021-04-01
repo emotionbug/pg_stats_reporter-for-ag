@@ -32,127 +32,127 @@ $config_cache_file = "";
 $tmpCreated = false;
 
 $global_setting_list = array(
-	INSTALL_DIR,
-	LOG_PAGE_SIZE,
+    INSTALL_DIR,
+    LOG_PAGE_SIZE,
 );
 /* global variable end */
 
 // option parameter
 $optionInfo = array("list" => false,
-					"dblist" => false,
-					"size" => false,
-					"index" => false,
-					"all" => false,
-					"repositorydb" => NULL,
-					"instid" => NULL,
-					"beginid" => NULL,
-					"endid" => NULL,
-					"begindate" => NULL,
-					"enddate" => NULL,
-					"outputdir" => NULL);
+    "dblist" => false,
+    "size" => false,
+    "index" => false,
+    "all" => false,
+    "repositorydb" => NULL,
+    "instid" => NULL,
+    "beginid" => NULL,
+    "endid" => NULL,
+    "begindate" => NULL,
+    "enddate" => NULL,
+    "outputdir" => NULL);
 $optionList = array("l" => "list",
-					"L" => "dblist",
-					"s" => "size",
-					"a" => "all",
-					"R" => "repositorydb",
-					"i" => "instid",
-					"b" => "beginid",
-					"e" => "endid",
-					"B" => "begindate",
-					"E" => "enddate",
-					"O" => "outputdir");
+    "L" => "dblist",
+    "s" => "size",
+    "a" => "all",
+    "R" => "repositorydb",
+    "i" => "instid",
+    "b" => "beginid",
+    "e" => "endid",
+    "B" => "begindate",
+    "E" => "enddate",
+    "O" => "outputdir");
 
 $combinationCheckList = array("list" => array("dblist",
-											  "size",
-											  "index",
-											  "all",
-											  "beginid",
-											  "endid",
-											  "begindate",
-											  "enddate",
-											  "outputdir"),
-							  "dblist" => array("list",
-												"size",
-												"index",
-												"all",
-												"instid",
-												"beginid",
-												"endid",
-												"begindate",
-												"enddate",
-												"outputdir"),
-							  "size" => array("list",
-											  "dblist",
-											  "index",
-											  "all",
-											  "instid",
-											  "beginid",
-											  "endid",
-											  "begindate",
-											  "enddate",
-											  "outputdir"),
-							  "index" => array("list",
-											  	 "dblist",
-												 "size",
-											  	 "all",
-												 "repositorydb",
-											  	 "instid",
-											  	 "beginid",
-											  	 "endid",
-											  	 "begindate",
-											  	 "enddate"),
-							  "all" => array("list",
-											 "dblist",
-											 "size",
-											 "index"),
-							  "repositorydb" => array("index"),
-							  "instid" => array("dblist",
-												"size",
-												"index"),
-							  "beginid" => array("list",
-												 "dblist",
-												 "size",
-												 "index",
-												 "begindate",
-												 "enddate"),
-							  "endid" => array("list",
-											   "dblist",
-											   "size",
-											   "index",
-											   "begindate",
-											   "enddate"),
-							  "begindate" => array("list",
-												   "dblist",
-												   "size",
-												   "index",
-												   "beginid",
-												   "endid"),
-							  "enddate" => array("list",
-												 "dblist",
-												 "size",
-												 "index",
-												 "beginid",
-												 "endid"),
-							  "outputdir" => array("list",
-												   "dblist",
-												   "size"));
+    "size",
+    "index",
+    "all",
+    "beginid",
+    "endid",
+    "begindate",
+    "enddate",
+    "outputdir"),
+    "dblist" => array("list",
+        "size",
+        "index",
+        "all",
+        "instid",
+        "beginid",
+        "endid",
+        "begindate",
+        "enddate",
+        "outputdir"),
+    "size" => array("list",
+        "dblist",
+        "index",
+        "all",
+        "instid",
+        "beginid",
+        "endid",
+        "begindate",
+        "enddate",
+        "outputdir"),
+    "index" => array("list",
+        "dblist",
+        "size",
+        "all",
+        "repositorydb",
+        "instid",
+        "beginid",
+        "endid",
+        "begindate",
+        "enddate"),
+    "all" => array("list",
+        "dblist",
+        "size",
+        "index"),
+    "repositorydb" => array("index"),
+    "instid" => array("dblist",
+        "size",
+        "index"),
+    "beginid" => array("list",
+        "dblist",
+        "size",
+        "index",
+        "begindate",
+        "enddate"),
+    "endid" => array("list",
+        "dblist",
+        "size",
+        "index",
+        "begindate",
+        "enddate"),
+    "begindate" => array("list",
+        "dblist",
+        "size",
+        "index",
+        "beginid",
+        "endid"),
+    "enddate" => array("list",
+        "dblist",
+        "size",
+        "index",
+        "beginid",
+        "endid"),
+    "outputdir" => array("list",
+        "dblist",
+        "size"));
 
 /* setup signal handlers */
 if (PHP_OS == "Linux") {
-	declare(ticks = 1);
-	pcntl_signal(SIGHUP, "signalHandler"); 
-	pcntl_signal(SIGINT, "signalHandler");
-	pcntl_signal(SIGTERM, "signalHandler");
-	pcntl_signal(SIGQUIT, "signalHandler");
+    declare(ticks=1);
+    pcntl_signal(SIGHUP, "signalHandler");
+    pcntl_signal(SIGINT, "signalHandler");
+    pcntl_signal(SIGTERM, "signalHandler");
+    pcntl_signal(SIGQUIT, "signalHandler");
 }
 
 /* set default timezone */
 $timezone = ini_get('date.timezone');
 if (!$timezone) {
-	$timezone_abbr = exec('date +%Z');
-	$timezone = timezone_name_from_abbr($timezone_abbr);
-	if (!$timezone)
-		$timezone = "UTC";
+    $timezone_abbr = exec('date +%Z');
+    $timezone = timezone_name_from_abbr($timezone_abbr);
+    if (!$timezone)
+        $timezone = "UTC";
 }
 date_default_timezone_set($timezone);
 
@@ -161,39 +161,39 @@ parseCommandOptions($optionInfo);
 
 // set default output directory
 if (!isset($optionInfo["outputdir"]))
-	$optionInfo["outputdir"] = "./";
+    $optionInfo["outputdir"] = "./";
 
 // create output directory
 if (!is_dir($optionInfo["outputdir"])) {
-	if ($optionInfo["index"])
-		elog(ERROR, "Output directory not exists: '%s'", $optionInfo["outputdir"]);
-	if (!mkdir($optionInfo["outputdir"], 0755, true))
-		elog(ERROR, "Could not create output directory: '%s'", $optionInfo["outputdir"]);
+    if ($optionInfo["index"])
+        elog(ERROR, "Output directory not exists: '%s'", $optionInfo["outputdir"]);
+    if (!mkdir($optionInfo["outputdir"], 0755, true))
+        elog(ERROR, "Could not create output directory: '%s'", $optionInfo["outputdir"]);
 }
 
 // create temporary directory
 $tmpTopdir = joinPathComponents($optionInfo["outputdir"], "tmp");
 $tmpCreated = !is_dir($tmpTopdir);
 if (!is_dir($tmpTopdir)) {
-	if (!mkdir($tmpTopdir, 0755, false))
-		elog(ERROR, "Could not create temporary directory: '%s'", $tmpTopdir);
+    if (!mkdir($tmpTopdir, 0755, false))
+        elog(ERROR, "Could not create temporary directory: '%s'", $tmpTopdir);
 }
 
 $tmpfile = tempnam($tmpTopdir, "");
-$tmpdir = $tmpfile."tmp";
+$tmpdir = $tmpfile . "tmp";
 if (!mkdir($tmpdir, 0755, false))
-	elog(ERROR, "Could not create temporary directory: '%s'", $tmpdir);
+    elog(ERROR, "Could not create temporary directory: '%s'", $tmpdir);
 
 // register a function to be executed at the end of this script
 register_shutdown_function("cleanTemporaryDirectory", $tmpTopdir, $tmpdir, $tmpfile);
 
 // create cache directory
 if (!mkdir(joinPathComponents($tmpdir, "cache"), 0755, false))
-	elog(ERROR, "Could not create directory: '%s'", joinPathComponents($tmpdir, "cache"));
-	
+    elog(ERROR, "Could not create directory: '%s'", joinPathComponents($tmpdir, "cache"));
+
 // create compiled directory
 if (!mkdir(joinPathComponents($tmpdir, "compiled"), 0755, false))
-	elog(ERROR, "Could not create directory: '%s'", joinPathComponents($tmpdir, "compiled"));
+    elog(ERROR, "Could not create directory: '%s'", joinPathComponents($tmpdir, "compiled"));
 
 $config_cache_file = joinPathComponents($tmpdir, "cache/pg_stats_reporter.ini");
 // read global setting from pg_stats_reporter.ini
@@ -202,36 +202,36 @@ $installDir = $globalSetting[INSTALL_DIR];
 
 // require submodule
 $include_files =
-     array("define.php", "common.php",
-           "make_report.php", "make_report_plans.php",
-                  "make_report_list.php");
+    array("define.php", "common.php",
+        "make_report.php", "make_report_plans.php",
+        "make_report_list.php");
 $module_path =
-     joinPathComponents($installDir, "pg_stats_reporter_lib/module");
+    joinPathComponents($installDir, "pg_stats_reporter_lib/module");
 
-foreach ($include_files as $f) {	       
-  if (!@include_once(($includePath = joinPathComponents($module_path, $f))))
-	elog(ERROR, "Failed to include file: %s", $includePath);
+foreach ($include_files as $f) {
+    if (!@include_once(($includePath = joinPathComponents($module_path, $f))))
+        elog(ERROR, "Failed to include file: %s", $includePath);
 }
 
 // the variable SMARTY_PATH is defined in define.php
-if (!@include_once(($includePath = joinPathComponents($installDir, "html/pg_stats_reporter/".SMARTY_PATH."/Smarty.class.php"))))
-	elog(ERROR, "Failed to include file: %s", $includePath);
+if (!@include_once(($includePath = joinPathComponents($installDir, "html/pg_stats_reporter/" . SMARTY_PATH . "/Smarty.class.php"))))
+    elog(ERROR, "Failed to include file: %s", $includePath);
 
 // read pg_stats_reporter.ini
 if (($infoData = initInformationFileForCommandline(
-		$infoData, $errmsg, $config_cache_file)) == false) {
-	$str = "Error reading pg_stats_reporter.ini";
-	foreach ($errmsg as $val) {
-		$str .= "\n - ".$val;
-	}
-	elog(ERROR, $str);
+        $infoData, $errmsg, $config_cache_file)) == false) {
+    $str = "Error reading pg_stats_reporter.ini";
+    foreach ($errmsg as $val) {
+        $str .= "\n - " . $val;
+    }
+    elog(ERROR, $str);
 }
 if (count($errmsg) != 0) {
-	$str = "An error has occurred in pg_stats_reporter.ini";
-	foreach ($errmsg as $val) {
-		$str .= "\n - ".$val;
-	}
-	elog(ERROR, $str);
+    $str = "An error has occurred in pg_stats_reporter.ini";
+    foreach ($errmsg as $val) {
+        $str .= "\n - " . $val;
+    }
+    elog(ERROR, $str);
 }
 
 /*
@@ -241,30 +241,30 @@ if (count($errmsg) != 0) {
  */
 $cnt = 0;
 foreach ($infoData as $repo_name => $val) {
-	if (count($val) == 0)
-		$cnt++;
+    if (count($val) == 0)
+        $cnt++;
 }
 if ($cnt == count($infoData))
-	exit(1);
+    exit(1);
 
 /*
  * Check monitored database is registered to repository database.
  */
 $cnt = 0;
 foreach ($infoData as $repo_name => $val) {
-	if (!array_key_exists("monitor", $val)) {
-		unset($infoData[$repo_name]);
-		$cnt++;
-	}
+    if (!array_key_exists("monitor", $val)) {
+        unset($infoData[$repo_name]);
+        $cnt++;
+    }
 }
 if (count($infoData) == 0)
-	exit(1);
+    exit(1);
 
 // if repository database specified, it is confirm that 
 // the repository database name is set in pg_stats_reporter.ini
 if (isset($optionInfo["repositorydb"])) {
-	if (!array_key_exists($optionInfo["repositorydb"], $infoData))
-		elog(ERROR, "Invalid repository database name (--repositorydb) : '%s'", $optionInfo["repositorydb"]);
+    if (!array_key_exists($optionInfo["repositorydb"], $infoData))
+        elog(ERROR, "Invalid repository database name (--repositorydb) : '%s'", $optionInfo["repositorydb"]);
 }
 
 // create message file list
@@ -272,152 +272,152 @@ createMessageFileList(joinPathComponents($installDir, "pg_stats_reporter_lib/mes
 
 // execute command line function
 if ($optionInfo["list"]) {
-	// TODO: if you use message_file, read it here
+    // TODO: if you use message_file, read it here
 
-	// display snapshot list
-	displaySnapshotList($infoData, $optionInfo["instid"], $optionInfo["repositorydb"]);
+    // display snapshot list
+    displaySnapshotList($infoData, $optionInfo["instid"], $optionInfo["repositorydb"]);
 } else if ($optionInfo["dblist"]) {
-	// TODO: if you use message_file, read it here
+    // TODO: if you use message_file, read it here
 
-	// display monitored database list
-	displayMonitoredDatabaseList($infoData, $optionInfo["repositorydb"]);
+    // display monitored database list
+    displayMonitoredDatabaseList($infoData, $optionInfo["repositorydb"]);
 } else if ($optionInfo["size"]) {
-	// TODO: if you use message_file, read it here
+    // TODO: if you use message_file, read it here
 
-	// display snapshot size infomation
-	displaySnapshotSize($infoData, $optionInfo["repositorydb"]);
+    // display snapshot size infomation
+    displaySnapshotSize($infoData, $optionInfo["repositorydb"]);
 } else if ($optionInfo["index"]) {
-	// TODO: if you use message_file, read it here
+    // TODO: if you use message_file, read it here
 
-	// create a HTML report list
-	makeReportList($optionInfo["outputdir"]);
+    // create a HTML report list
+    makeReportList($optionInfo["outputdir"]);
 } else {
-	// copy library file
-	copyLibraryFile($installDir, $optionInfo['outputdir']);
+    // copy library file
+    copyLibraryFile($installDir, $optionInfo['outputdir']);
 
-	// create Smarty instance
-	$smarty = createSmartyInstance($installDir, $optionInfo["outputdir"], $tmpdir);
+    // create Smarty instance
+    $smarty = createSmartyInstance($installDir, $optionInfo["outputdir"], $tmpdir);
 
-	// set report period
-	$target_data = array();
-	$target_data["begin_date"] = $optionInfo["begindate"];
-	$target_data["end_date"] = $optionInfo["enddate"];
-	$target_data["begin_id"] = $optionInfo["beginid"];
-	$target_data["end_id"] = $optionInfo["endid"];
+    // set report period
+    $target_data = array();
+    $target_data["begin_date"] = $optionInfo["begindate"];
+    $target_data["end_date"] = $optionInfo["enddate"];
+    $target_data["begin_id"] = $optionInfo["beginid"];
+    $target_data["end_id"] = $optionInfo["endid"];
 
-	// if report period is not specify, sets default period 
-	if (!isset($target_data["begin_id"]) && !isset($target_data["begin_date"]) &&
-		!isset($target_data["end_id"]) && !isset($target_data["end_date"])) {
-		$target_data["begin_date"] = date('Y-m-d', time() - 24*60*60)." 00:00:00";
-		$target_data["end_date"] = date('Y-m-d H:i:s');
-	}
+    // if report period is not specify, sets default period
+    if (!isset($target_data["begin_id"]) && !isset($target_data["begin_date"]) &&
+        !isset($target_data["end_id"]) && !isset($target_data["end_date"])) {
+        $target_data["begin_date"] = date('Y-m-d', time() - 24 * 60 * 60) . " 00:00:00";
+        $target_data["end_date"] = date('Y-m-d H:i:s');
+    }
 
-	/* make report */
-	$reportNum = 0;
-	$repoInfo = array();
-	if (isset($optionInfo["repositorydb"])) {
-		$repoInfo[$optionInfo["repositorydb"]] = $infoData[$optionInfo["repositorydb"]];
-	} else {
-		$repoInfo = $infoData;
-	}
+    /* make report */
+    $reportNum = 0;
+    $repoInfo = array();
+    if (isset($optionInfo["repositorydb"])) {
+        $repoInfo[$optionInfo["repositorydb"]] = $infoData[$optionInfo["repositorydb"]];
+    } else {
+        $repoInfo = $infoData;
+    }
 
-	foreach ($repoInfo as $key => $val) {
-		/* if connection could not be established already, continue with no message. */
-		if (count($val) == 0)
-			continue;
+    foreach ($repoInfo as $key => $val) {
+        /* if connection could not be established already, continue with no message. */
+        if (count($val) == 0)
+            continue;
 
-		if (isset($optionInfo["instid"])) {
-			if (!array_key_exists("monitor", $val)) {
-				continue;
-			} else if (!array_key_exists($optionInfo["instid"], $val["monitor"])) {
-				elog(WARNING, "No target database: repositorydb = %s, instid = %d", $key, $optionInfo["instid"]);
-			 	continue;
-			} else {
-				$target = array($optionInfo["instid"] => $val["monitor"][$optionInfo["instid"]]);
-			}
-		} else {
-			if (!array_key_exists("monitor", $val))
-				continue;
+        if (isset($optionInfo["instid"])) {
+            if (!array_key_exists("monitor", $val)) {
+                continue;
+            } else if (!array_key_exists($optionInfo["instid"], $val["monitor"])) {
+                elog(WARNING, "No target database: repositorydb = %s, instid = %d", $key, $optionInfo["instid"]);
+                continue;
+            } else {
+                $target = array($optionInfo["instid"] => $val["monitor"][$optionInfo["instid"]]);
+            }
+        } else {
+            if (!array_key_exists("monitor", $val))
+                continue;
 
-			$target = $val["monitor"];
-		}
+            $target = $val["monitor"];
+        }
 
-		// connect database
-		$conn = @pg_connect($val["connect_str"]);
-		if (!$conn) {
-			elog(WARNING, "Connection error: repository database : %s", $target_data['repodb']);
-			continue;
-		}
-		pg_set_client_encoding($conn, "UTF-8");
+        // connect database
+        $conn = @pg_connect($val["connect_str"]);
+        if (!$conn) {
+            elog(WARNING, "Connection error: repository database : %s", $target_data['repodb']);
+            continue;
+        }
+        pg_set_client_encoding($conn, "UTF-8");
 
-		foreach ($target as $monitorid => $monitorstr) {
-			$target_data["repodb"] = $key;
-			$target_data["instid"] = $monitorid;
-			$target_info = $infoData[$key];
+        foreach ($target as $monitorid => $monitorstr) {
+            $target_data["repodb"] = $key;
+            $target_data["instid"] = $monitorid;
+            $target_info = $infoData[$key];
 
-			// read message file
-			$language = getLanguage($infoData, $key);
-			readMessageFile($language, $msgFileList, $help_message, $error_message);
+            // read message file
+            $language = getLanguage($infoData, $key);
+            readMessageFile($language, $msgFileList, $help_message, $error_message);
 
-			// start transaction
-			$result = pg_query("BEGIN");
-			pg_free_result($result);
-			$result = pg_query("LOCK TABLE statsrepo.instance IN SHARE MODE");
-			if (!$result) {
-				elog(ERROR, pg_last_error());
-			}
-			pg_free_result($result);
+            // start transaction
+            $result = pg_query("BEGIN");
+            pg_free_result($result);
+            $result = pg_query("LOCK TABLE statsrepo.instance IN SHARE MODE");
+            if (!$result) {
+                elog(ERROR, pg_last_error());
+            }
+            pg_free_result($result);
 
-			// get snapshot id and date
-			if (!getSnapshotID($conn, $target_data, $snapids, $snapdates)) {
-				elog(WARNING, $error_message['query_error'], pg_last_error($conn));
-				continue;
-			}
-			if ($snapids[0] == $snapids[1] || is_null($snapids[0]) || is_null($snapids[1])) {
-				elog(WARNING, "Could not create report: repositorydb = %s, instid = %d", $key, $monitorid);
-				continue;
-			}
+            // get snapshot id and date
+            if (!getSnapshotID($conn, $target_data, $snapids, $snapdates)) {
+                elog(WARNING, $error_message['query_error'], pg_last_error($conn));
+                continue;
+            }
+            if ($snapids[0] == $snapids[1] || is_null($snapids[0]) || is_null($snapids[1])) {
+                elog(WARNING, "Could not create report: repositorydb = %s, instid = %d", $key, $monitorid);
+                continue;
+            }
 
-			// make report
-			$html_string = makeReportForCommandline($conn, $infoData, $target_data, $snapids);
-			pg_query("COMMIT");
+            // make report
+            $html_string = makeReportForCommandline($conn, $infoData, $target_data, $snapids);
+            pg_query("COMMIT");
 
             if ($html_string == null) {
                 elog(ERROR, "This version of pg_statsinfo not supported. Please use %s.", "10.x");
             }
 
 
-			$smarty->assign("header_menu", $html_string["header_menu"]);
-			$smarty->assign("left_menu", $html_string["left_menu"]);
-			$smarty->assign("contents", $html_string["contents"]);
+            $smarty->assign("header_menu", $html_string["header_menu"]);
+            $smarty->assign("left_menu", $html_string["left_menu"]);
+            $smarty->assign("contents", $html_string["contents"]);
 
 
-			// make report filename
-			$client = explode(":", $monitorstr);
-			$filename = $key."_".$client[0]."_".$client[1]."_".$monitorid."_".$snapdates[0]."_".$snapdates[1];
-			if ($optionInfo["all"] == true)
-				$filename .= "_all";
-			$filename .= ".html";
-			$filepath = joinPathComponents($optionInfo['outputdir'], $filename);
+            // make report filename
+            $client = explode(":", $monitorstr);
+            $filename = $key . "_" . $client[0] . "_" . $client[1] . "_" . $monitorid . "_" . $snapdates[0] . "_" . $snapdates[1];
+            if ($optionInfo["all"] == true)
+                $filename .= "_all";
+            $filename .= ".html";
+            $filepath = joinPathComponents($optionInfo['outputdir'], $filename);
 
-			// output file
-			if (!($fp = fopen($filepath, "w")))
-				elog(ERROR, "Could not create report file");
-			if (fwrite($fp, $smarty->fetch("pg_stats_reporter.tpl")) == false)
-				elog(ERROR, "Could not create report file");
-			fclose($fp);
+            // output file
+            if (!($fp = fopen($filepath, "w")))
+                elog(ERROR, "Could not create report file");
+            if (fwrite($fp, $smarty->fetch("pg_stats_reporter.tpl")) == false)
+                elog(ERROR, "Could not create report file");
+            fclose($fp);
 
-			// display message
-			elog(LOG, "Report file created: %s", $filename);
-			$reportNum++;
-		}
-		// disconnect database
-		pg_close($conn);
+            // display message
+            elog(LOG, "Report file created: %s", $filename);
+            $reportNum++;
+        }
+        // disconnect database
+        pg_close($conn);
 
-		// creat a HTML report list
-		if ($reportNum > 0)
-			makeReportList($optionInfo["outputdir"]);
-	}
+        // creat a HTML report list
+        if ($reportNum > 0)
+            makeReportList($optionInfo["outputdir"]);
+    }
 }
 
 exit(0);
@@ -425,18 +425,18 @@ exit(0);
 /* execute when this script exit */
 function cleanTemporaryDirectory($tmpTopdir, $tmpdir, $tmpfile)
 {
-	global $tmpCreated;
-	$deletedir = NULL;
+    global $tmpCreated;
+    $deletedir = NULL;
 
-	/* if this script created tmp directory, delete tmp directory */
-	if ($tmpCreated) {
-		$deleteDir = $tmpTopdir;
-	} else {
-		$deleteDir = $tmpdir;
-		unlink($tmpfile);
-	}
+    /* if this script created tmp directory, delete tmp directory */
+    if ($tmpCreated) {
+        $deleteDir = $tmpTopdir;
+    } else {
+        $deleteDir = $tmpdir;
+        unlink($tmpfile);
+    }
 
-	deleteDirectory($deleteDir);
+    deleteDirectory($deleteDir);
 }
 
 /* execute when the below signal is received
@@ -447,720 +447,720 @@ function cleanTemporaryDirectory($tmpTopdir, $tmpdir, $tmpfile)
 */
 function signalHandler()
 {
-	exit(1);
+    exit(1);
 }
 
 /* append path to the end of string */
 function joinPathComponents($pathStr, $addPath)
 {
-	if (strcmp(substr($pathStr, -1), "/") != 0)
-		$pathStr .= "/";
+    if (strcmp(substr($pathStr, -1), "/") != 0)
+        $pathStr .= "/";
 
-	return $pathStr .= $addPath;
+    return $pathStr .= $addPath;
 }
 
 /* check option combination */
 function checkOptionCombination($optionInfo, $addMsg)
 {
-	global $combinationCheckList;
-	global $optionList;
+    global $combinationCheckList;
+    global $optionList;
 
-	/* If the option is specified, check combination with the combinationCheckList */
-	foreach ($optionInfo as $currentOption => $status) {
+    /* If the option is specified, check combination with the combinationCheckList */
+    foreach ($optionInfo as $currentOption => $status) {
 
-		/* check whether option is specified */
-		if (isset($status) && !($status === false)) {
+        /* check whether option is specified */
+        if (isset($status) && !($status === false)) {
 
-			/* check whether option that can not be specified at the same time is specified */
-			foreach ($combinationCheckList[$currentOption] as $val) {
-				if (isset($optionInfo[$val]) && !($optionInfo[$val] === false)) {
+            /* check whether option that can not be specified at the same time is specified */
+            foreach ($combinationCheckList[$currentOption] as $val) {
+                if (isset($optionInfo[$val]) && !($optionInfo[$val] === false)) {
 
-					/* get string of short option */
-					/* if short option do not exist, exclude from error message */
-					$tmpOpt = array_search($currentOption, $optionList);
-					$forwardOpt = ($tmpOpt? "-".$tmpOpt.", " : "")."--".$currentOption;
-					$tmpOpt = array_search($val, $optionList);
-					$backwardOpt = ($tmpOpt? "-".$tmpOpt.", " : "")."--".$val;
-					elog(ERROR, "Exclusive options: '%s' and '%s'".$addMsg, $forwardOpt, $backwardOpt);
-				}
-			}
-		}
-	}
+                    /* get string of short option */
+                    /* if short option do not exist, exclude from error message */
+                    $tmpOpt = array_search($currentOption, $optionList);
+                    $forwardOpt = ($tmpOpt ? "-" . $tmpOpt . ", " : "") . "--" . $currentOption;
+                    $tmpOpt = array_search($val, $optionList);
+                    $backwardOpt = ($tmpOpt ? "-" . $tmpOpt . ", " : "") . "--" . $val;
+                    elog(ERROR, "Exclusive options: '%s' and '%s'" . $addMsg, $forwardOpt, $backwardOpt);
+                }
+            }
+        }
+    }
 }
 
 /* parse command options */
 function parseCommandOptions(&$optionInfo)
 {
-	global $optionList;
-	global $argc;
-	global $argv;
-	$addMsg = "\nTry \"pg_stats_reporter --help\" for more information.";
+    global $optionList;
+    global $argc;
+    global $argv;
+    $addMsg = "\nTry \"pg_stats_reporter --help\" for more information.";
 
-	for( $i=1 ; $i<$argc ; $i++ ) {
+    for ($i = 1; $i < $argc; $i++) {
 
-		if (strncmp($argv[$i], '--', 2) == 0) {
-			$opt_array = explode("=", ltrim($argv[$i], "-"), 2);
-			switch($opt_array[0]) {
-				case "elevel":
-					break;
-				case "help":
-					displayUsage();
-					exit(0);
-				case "version":
-					displayVersion();
-					exit(0);
-				case "list":
-				case "dblist":
-				case "size":
-				case "index":
-				case "all":
-					$optionInfo[$opt_array[0]] = true;
-					break;
-				case "repositorydb":
-				case "instid":
-				case "beginid":
-				case "endid":
-				case "begindate":
-				case "enddate":
-				case "outputdir":
-					if (count($opt_array) == 2) 
-						$optionInfo[$opt_array[0]] = $opt_array[1];
-					else {
-						if (++$i == $argc) {
-							elog(ERROR, "Option requires argument -- '%s'".$addMsg, $opt_array[0]);
-						}
-						$optionInfo[$opt_array[0]] = $argv[$i];
-					}
-					break;
-				default:
-					elog(ERROR,"Invalid option -- '%s'".$addMsg, $opt_array[0]);
-			}
-		} else if ($argv[$i][0] == '-') {
-			$opt = ltrim($argv[$i], "-");
-			switch($opt) {
-				case "l":
-				case "L":
-				case "s":
-				case "a":
-					$optionInfo[$optionList[$opt]] = true;
-					break;
-				case "R":
-				case "i":
-				case "b":
-				case "e":
-				case "B":
-				case "E":
-				case "O":
-					if (++$i == $argc) {
-						elog(ERROR, "Option requires argument -- '%s'".$addMsg, $opt);
-					}
-					$optionInfo[$optionList[$opt]] = $argv[$i];
-					break;
-				default:
-					elog(ERROR, "Invalid option -- '%s'".$addMsg, $opt);
-			}
-		} else {
-			elog(ERROR, "Unrecognized option: '%s'".$addMsg, $opt);
-		}
-	}
-	checkOptionCombination($optionInfo, $addMsg);
+        if (strncmp($argv[$i], '--', 2) == 0) {
+            $opt_array = explode("=", ltrim($argv[$i], "-"), 2);
+            switch ($opt_array[0]) {
+                case "elevel":
+                    break;
+                case "help":
+                    displayUsage();
+                    exit(0);
+                case "version":
+                    displayVersion();
+                    exit(0);
+                case "list":
+                case "dblist":
+                case "size":
+                case "index":
+                case "all":
+                    $optionInfo[$opt_array[0]] = true;
+                    break;
+                case "repositorydb":
+                case "instid":
+                case "beginid":
+                case "endid":
+                case "begindate":
+                case "enddate":
+                case "outputdir":
+                    if (count($opt_array) == 2)
+                        $optionInfo[$opt_array[0]] = $opt_array[1];
+                    else {
+                        if (++$i == $argc) {
+                            elog(ERROR, "Option requires argument -- '%s'" . $addMsg, $opt_array[0]);
+                        }
+                        $optionInfo[$opt_array[0]] = $argv[$i];
+                    }
+                    break;
+                default:
+                    elog(ERROR, "Invalid option -- '%s'" . $addMsg, $opt_array[0]);
+            }
+        } else if ($argv[$i][0] == '-') {
+            $opt = ltrim($argv[$i], "-");
+            switch ($opt) {
+                case "l":
+                case "L":
+                case "s":
+                case "a":
+                    $optionInfo[$optionList[$opt]] = true;
+                    break;
+                case "R":
+                case "i":
+                case "b":
+                case "e":
+                case "B":
+                case "E":
+                case "O":
+                    if (++$i == $argc) {
+                        elog(ERROR, "Option requires argument -- '%s'" . $addMsg, $opt);
+                    }
+                    $optionInfo[$optionList[$opt]] = $argv[$i];
+                    break;
+                default:
+                    elog(ERROR, "Invalid option -- '%s'" . $addMsg, $opt);
+            }
+        } else {
+            elog(ERROR, "Unrecognized option: '%s'" . $addMsg, $opt);
+        }
+    }
+    checkOptionCombination($optionInfo, $addMsg);
 }
 
 /* read global_setting from information file */
 function readGlobalSettingForCommandline(&$global_setting)
 {
-	global $global_setting_list;
+    global $global_setting_list;
 
-	$ini_data = array();
-	$err_msg = array();
-	$config_file = "";
+    $ini_data = array();
+    $err_msg = array();
+    $config_file = "";
 
-	/* select reading pg_stats_reporter.ini */
-	if (is_file(LOCAL_CONFIG_FILE)) {
-		$config_file = LOCAL_CONFIG_FILE;
-	} else if (is_file(CONFIG_FILE)) {
-		$config_file = CONFIG_FILE;
-	} else {
-		elog(ERROR, "pg_stats_reporter.ini not found.");
-	}
+    /* select reading pg_stats_reporter.ini */
+    if (is_file(LOCAL_CONFIG_FILE)) {
+        $config_file = LOCAL_CONFIG_FILE;
+    } else if (is_file(CONFIG_FILE)) {
+        $config_file = CONFIG_FILE;
+    } else {
+        elog(ERROR, "pg_stats_reporter.ini not found.");
+    }
 
-	/* read pg_stats_reporter.ini */
-	if (($ini_data = parse_ini_file($config_file, true)) == false)
-		elog(ERROR, "No section found (%s).", $config_file);
+    /* read pg_stats_reporter.ini */
+    if (($ini_data = parse_ini_file($config_file, true)) == false)
+        elog(ERROR, "No section found (%s).", $config_file);
 
-	// pick up "global" section
-	if (!array_key_exists(GLOBAL_SECTION, $ini_data))
-		elog(ERROR, "Global setting section not found (%s).", $config_file);
+    // pick up "global" section
+    if (!array_key_exists(GLOBAL_SECTION, $ini_data))
+        elog(ERROR, "Global setting section not found (%s).", $config_file);
 
-	// validate check
-	foreach ($global_setting_list as $item) {
-		if (!array_key_exists($item, $ini_data[GLOBAL_SECTION])) {
-			// provisional cope
-			if ($item == "log_page_size")
-				$ini_data[GLOBAL_SECTION]["log_page_size"] = 1000;
-			else
-				$err_msg[] = "[".GLOBAL_SECTION."]".$item.": Required item not exists.";
-		}
-	}
-	foreach (array_keys($ini_data[GLOBAL_SECTION]) as $item) {
-		if (!in_array($item, $global_setting_list)) {
-			$err_msg[] = "[".GLOBAL_SECTION."]".$item.": Item is invalid.";
-		}
-	}
-	if (count($err_msg) > 0) {
-		$message = "An error occurred in pg_stats_reporter.ini";
-		foreach ($err_msg as $msg) {
-			$message .= "\n - ".$msg;
-		}
-		elog(ERROR, $message);
-	}
+    // validate check
+    foreach ($global_setting_list as $item) {
+        if (!array_key_exists($item, $ini_data[GLOBAL_SECTION])) {
+            // provisional cope
+            if ($item == "log_page_size")
+                $ini_data[GLOBAL_SECTION]["log_page_size"] = 1000;
+            else
+                $err_msg[] = "[" . GLOBAL_SECTION . "]" . $item . ": Required item not exists.";
+        }
+    }
+    foreach (array_keys($ini_data[GLOBAL_SECTION]) as $item) {
+        if (!in_array($item, $global_setting_list)) {
+            $err_msg[] = "[" . GLOBAL_SECTION . "]" . $item . ": Item is invalid.";
+        }
+    }
+    if (count($err_msg) > 0) {
+        $message = "An error occurred in pg_stats_reporter.ini";
+        foreach ($err_msg as $msg) {
+            $message .= "\n - " . $msg;
+        }
+        elog(ERROR, $message);
+    }
 
-	$global_setting = $ini_data[GLOBAL_SECTION];
-	return $ini_data;
+    $global_setting = $ini_data[GLOBAL_SECTION];
+    return $ini_data;
 }
 
 /* read information file and make cache file */
 function initInformationFileForCommandline($infoData, &$err_msg, $config_cache_file)
 {
-	global $conf_key_list;
-	global $report_default;
-	global $optionInfo;
+    global $conf_key_list;
+    global $report_default;
+    global $optionInfo;
 
-	$err_msg = array();
-	$cache_contents = array();
-	$setting = $report_default;
+    $err_msg = array();
+    $cache_contents = array();
+    $setting = $report_default;
 
-	// exclude "global" section
-	assert(array_key_exists(GLOBAL_SECTION, $infoData));
-	unset($infoData[GLOBAL_SECTION]);
+    // exclude "global" section
+    assert(array_key_exists(GLOBAL_SECTION, $infoData));
+    unset($infoData[GLOBAL_SECTION]);
 
-	/* check format and get data */
-	foreach ($infoData as $repo_name => $data_array) {
-		if (!is_array($data_array)) {
-			$err_msg[] = "Does not contain a section(repositoryDB name:".$repo_name.").";
-			return false;
-		}
+    /* check format and get data */
+    foreach ($infoData as $repo_name => $data_array) {
+        if (!is_array($data_array)) {
+            $err_msg[] = "Does not contain a section(repositoryDB name:" . $repo_name . ").";
+            return false;
+        }
 
-		// check key name
-		foreach ($data_array as $key => $val) {
-			if (!array_key_exists($key, $report_default)
-				&& !array_key_exists($key, $conf_key_list)) {
-				$err_msg[] = "[".$repo_name."]".$key.": Item name is invalid.";
-				continue;
-			}
-		}
+        // check key name
+        foreach ($data_array as $key => $val) {
+            if (!array_key_exists($key, $report_default)
+                && !array_key_exists($key, $conf_key_list)) {
+                $err_msg[] = "[" . $repo_name . "]" . $key . ": Item name is invalid.";
+                continue;
+            }
+        }
 
-		// make database connection string
-		$connect_str = "";
-		if (array_key_exists('host', $data_array))
-			$connect_str = "host=".$data_array['host'];
-		if (array_key_exists('port', $data_array))
-			$connect_str .= " port=".$data_array['port'];
-		if (array_key_exists('dbname', $data_array))
-			$connect_str .= " dbname=".$data_array['dbname'];
-		if (array_key_exists('username', $data_array))
-			$connect_str .= " user=".$data_array['username'];
-		if (array_key_exists('password', $data_array)
-			&& $data_array['password'] != "")
-			$connect_str .= " password=".$data_array['password'];
-		$connect_str .= " connect_timeout=5";
+        // make database connection string
+        $connect_str = "";
+        if (array_key_exists('host', $data_array))
+            $connect_str = "host=" . $data_array['host'];
+        if (array_key_exists('port', $data_array))
+            $connect_str .= " port=" . $data_array['port'];
+        if (array_key_exists('dbname', $data_array))
+            $connect_str .= " dbname=" . $data_array['dbname'];
+        if (array_key_exists('username', $data_array))
+            $connect_str .= " user=" . $data_array['username'];
+        if (array_key_exists('password', $data_array)
+            && $data_array['password'] != "")
+            $connect_str .= " password=" . $data_array['password'];
+        $connect_str .= " connect_timeout=5";
 
-		// connect repository database and get target database information
-		// and get pg_statsinfo version
-		$conn = @pg_connect($connect_str);
-		if (!$conn) {
-			$err_msg[] = "connect error.(repository database = ".$repo_name.")";
-			continue;
-		} else {
-			pg_set_client_encoding($conn, "UTF-8");
+        // connect repository database and get target database information
+        // and get pg_statsinfo version
+        $conn = @pg_connect($connect_str);
+        if (!$conn) {
+            $err_msg[] = "connect error.(repository database = " . $repo_name . ")";
+            continue;
+        } else {
+            pg_set_client_encoding($conn, "UTF-8");
 
-			// statsrepo schema is not found
-			$result = pg_query($conn, "SELECT nspname FROM pg_catalog.pg_namespace WHERE nspname = 'statsrepo'");
-			if (!$result || !pg_num_rows($result)) {
-				$err_msg[] = "statsrepo schema is not found.(repository database = ".$repo_name.")";
-				pg_free_result($result);
-				pg_close($conn);
-				continue;
-			}
+            // statsrepo schema is not found
+            $result = pg_query($conn, "SELECT nspname FROM pg_catalog.pg_namespace WHERE nspname = 'statsrepo'");
+            if (!$result || !pg_num_rows($result)) {
+                $err_msg[] = "statsrepo schema is not found.(repository database = " . $repo_name . ")";
+                pg_free_result($result);
+                pg_close($conn);
+                continue;
+            }
 
-			$cache_contents[] = "[".$repo_name."]\n";
-			$cache_contents[] = "connect_str = \"".$connect_str."\"\n";
+            $cache_contents[] = "[" . $repo_name . "]\n";
+            $cache_contents[] = "connect_str = \"" . $connect_str . "\"\n";
 
-			$result = pg_query($conn, "SELECT p.proname FROM pg_catalog.pg_proc p LEFT JOIN pg_catalog.pg_namespace n ON p.pronamespace = n.oid WHERE n.nspname = 'statsrepo' AND p.proname = 'get_version'");
-			if (!$result) {
-				$err_msg[] = "execute query error. ".pg_last_error();
-			}
-			if (pg_num_rows($result) == 0) {
-				$cache_contents[] = "repo_version = ".V23."\n";
-			} else {
-				pg_free_result($result);
-				$result = pg_query($conn, "SELECT statsrepo.get_version()");
-				if (!$result) {
-					$err_msg[] = "execute query error. ".pg_last_error();
-				}
-				$row_array = pg_fetch_array($result, NULL, PGSQL_NUM);
-				$cache_contents[] = "repo_version = ".$row_array[0]."\n";
-			}
-			pg_free_result($result);
+            $result = pg_query($conn, "SELECT p.proname FROM pg_catalog.pg_proc p LEFT JOIN pg_catalog.pg_namespace n ON p.pronamespace = n.oid WHERE n.nspname = 'statsrepo' AND p.proname = 'get_version'");
+            if (!$result) {
+                $err_msg[] = "execute query error. " . pg_last_error();
+            }
+            if (pg_num_rows($result) == 0) {
+                $cache_contents[] = "repo_version = " . V23 . "\n";
+            } else {
+                pg_free_result($result);
+                $result = pg_query($conn, "SELECT statsrepo.get_version()");
+                if (!$result) {
+                    $err_msg[] = "execute query error. " . pg_last_error();
+                }
+                $row_array = pg_fetch_array($result, NULL, PGSQL_NUM);
+                $cache_contents[] = "repo_version = " . $row_array[0] . "\n";
+            }
+            pg_free_result($result);
 
-			$result = pg_query($conn, "SELECT instid, hostname, port, pg_version FROM statsrepo.instance");
-			if (!$result) {
-				$err_msg[] = "execute query error. ".pg_last_error();
-			} else if (pg_num_rows($result) == 0) {
-				elog(WARNING, "No target database registered (repository database = %s)", $repo_name);
-				continue;
-			} else {
-				for ($i = 0 ; $i < pg_num_rows($result) ; $i++ ) {
-					$row_array = pg_fetch_array($result, NULL, PGSQL_NUM);
-					$cache_contents[] = "monitor[".$row_array[0]."] = \"".$row_array[1].":".$row_array[2]."\"\n";
-					$cache_contents[] = "pg_version[".$row_array[0]."] = ".convertPGVersionNum($row_array[3])."\n";
-				}
-				pg_free_result($result);
-			}
-			pg_close($conn);
-		}
+            $result = pg_query($conn, "SELECT instid, hostname, port, pg_version FROM statsrepo.instance");
+            if (!$result) {
+                $err_msg[] = "execute query error. " . pg_last_error();
+            } else if (pg_num_rows($result) == 0) {
+                elog(WARNING, "No target database registered (repository database = %s)", $repo_name);
+                continue;
+            } else {
+                for ($i = 0; $i < pg_num_rows($result); $i++) {
+                    $row_array = pg_fetch_array($result, NULL, PGSQL_NUM);
+                    $cache_contents[] = "monitor[" . $row_array[0] . "] = \"" . $row_array[1] . ":" . $row_array[2] . "\"\n";
+                    $cache_contents[] = "pg_version[" . $row_array[0] . "] = " . convertPGVersionNum($row_array[3]) . "\n";
+                }
+                pg_free_result($result);
+            }
+            pg_close($conn);
+        }
 
-		// set language
-		if (array_key_exists('language', $data_array))
-			$cache_contents[] = "language = ".$data_array['language']."\n";
-		else
-			$cache_contents[] = "language = auto\n";
+        // set language
+        if (array_key_exists('language', $data_array))
+            $cache_contents[] = "language = " . $data_array['language'] . "\n";
+        else
+            $cache_contents[] = "language = auto\n";
 
-		// set report item
-		$setting = $report_default;
-		if (!$optionInfo["all"]) {
-			foreach ($setting as $key => $val) {
-				if (array_key_exists($key, $data_array)) {
-					switch($data_array[$key]) {
-					case 1:
-					case "":
-						$setting[$key] = $data_array[$key];
-						break;
-					default:
-						$err_msg[] = "[".$repo_name."]".$key." = ".$data_array[$key].": Set value is invalid.";
-					}
-				}
-			}
-		}
-		foreach (array_keys($setting) as $key) {
-			$cache_contents[] = $key." = ".$setting[$key]."\n";
-		}
-	}
+        // set report item
+        $setting = $report_default;
+        if (!$optionInfo["all"]) {
+            foreach ($setting as $key => $val) {
+                if (array_key_exists($key, $data_array)) {
+                    switch ($data_array[$key]) {
+                        case 1:
+                        case "":
+                            $setting[$key] = $data_array[$key];
+                            break;
+                        default:
+                            $err_msg[] = "[" . $repo_name . "]" . $key . " = " . $data_array[$key] . ": Set value is invalid.";
+                    }
+                }
+            }
+        }
+        foreach (array_keys($setting) as $key) {
+            $cache_contents[] = $key . " = " . $setting[$key] . "\n";
+        }
+    }
 
-	// write cache file
-	if (count($cache_contents) == 0) {
-		return false;
-	}
+    // write cache file
+    if (count($cache_contents) == 0) {
+        return false;
+    }
 
-	if (file_put_contents($config_cache_file, $cache_contents) == false) {
-		$err_msg[] = "do not write cache file(".$config_cache_file.")";
-		return false;
-	}
+    if (file_put_contents($config_cache_file, $cache_contents) == false) {
+        $err_msg[] = "do not write cache file(" . $config_cache_file . ")";
+        return false;
+    }
 
-	// read cache file
-	return parse_ini_file($config_cache_file, true);
+    // read cache file
+    return parse_ini_file($config_cache_file, true);
 
 }
 
 /* copy library file */
 function copyLibraryFile($installDir, $outputDir)
 {
-	$topDirList = array( "package", "js", "css");
+    $topDirList = array("package", "js", "css");
 
-	$copyPackageList = array(
-		'dir' => array( 
-						DYGRAPHS_PATH,
-						JQPLOT_PATH,
-						JQUERYUI_PATH,
-						SUPERFISH_PATH,
-						TIMEPICKER_PATH,
-						TABLESORTER_PATH),
-		'file' => array( 
-						JQUERY_PATH,
-						"js/common.js",
-						"js/pg_stats_reporter.js",
-						"css/pg_stats_reporter.css"));
-	/* topdir check */
-	foreach ($topDirList as $dir) {
-		
-		$dst = joinPathComponents($outputDir, $dir);
+    $copyPackageList = array(
+        'dir' => array(
+            DYGRAPHS_PATH,
+            JQPLOT_PATH,
+            JQUERYUI_PATH,
+            SUPERFISH_PATH,
+            TIMEPICKER_PATH,
+            TABLESORTER_PATH),
+        'file' => array(
+            JQUERY_PATH,
+            "js/common.js",
+            "js/pg_stats_reporter.js",
+            "css/pg_stats_reporter.css"));
+    /* topdir check */
+    foreach ($topDirList as $dir) {
 
-		if (file_exists($dst)) {
-			if (!(filetype($dst) === "dir"))
-				elog(ERROR, "Could not make directory '%s' : Regular file exists", $dst);
-		}
-		if (!is_dir($dst)) {
-			if (!mkdir($dst, 0755, true)) {
-				elog(ERROR, "Could not make directory '%s'", $dst);
-			}
-		}
-	}
+        $dst = joinPathComponents($outputDir, $dir);
 
-	/* copy directories in pakage list */
-	foreach ($copyPackageList['dir'] as $dirName) {
+        if (file_exists($dst)) {
+            if (!(filetype($dst) === "dir"))
+                elog(ERROR, "Could not make directory '%s' : Regular file exists", $dst);
+        }
+        if (!is_dir($dst)) {
+            if (!mkdir($dst, 0755, true)) {
+                elog(ERROR, "Could not make directory '%s'", $dst);
+            }
+        }
+    }
 
-		$src = joinPathComponents($installDir, "html/pg_stats_reporter/".$dirName);
-		$dst = joinPathComponents($outputDir, $dirName);
+    /* copy directories in pakage list */
+    foreach ($copyPackageList['dir'] as $dirName) {
 
-		/* check whether or not the target directory exists */ 
-		if (!file_exists(substr($src, 0, -1)))
-			elog(ERROR, "Could not copy '%s' : No such file or direcotry", $src);
+        $src = joinPathComponents($installDir, "html/pg_stats_reporter/" . $dirName);
+        $dst = joinPathComponents($outputDir, $dirName);
 
-		/* check whether or not the same name file exists */
-		if (file_exists(substr($dst, 0 , -1))) {
-			if (!(filetype(substr($dst, 0, -1)) === "dir"))
-				elog(ERROR, "Could not copy '%s' : Regular file exists", $dst);
-		}
+        /* check whether or not the target directory exists */
+        if (!file_exists(substr($src, 0, -1)))
+            elog(ERROR, "Could not copy '%s' : No such file or direcotry", $src);
 
-		/* copy direcotry */
-		if (!is_dir($dst)) {
-			if (!mkdir($dst, 0755, true))
-				elog(ERROR, "Could not make directory '%s'", $dst);
-		}
-		if (!copyDirectory($src, $dst))
-			elog(ERROR, "Could not copy '%s'", $dst);
-		
-	}
+        /* check whether or not the same name file exists */
+        if (file_exists(substr($dst, 0, -1))) {
+            if (!(filetype(substr($dst, 0, -1)) === "dir"))
+                elog(ERROR, "Could not copy '%s' : Regular file exists", $dst);
+        }
 
-	/* copy files in package list */
-	foreach ($copyPackageList['file'] as $fileName) {
+        /* copy direcotry */
+        if (!is_dir($dst)) {
+            if (!mkdir($dst, 0755, true))
+                elog(ERROR, "Could not make directory '%s'", $dst);
+        }
+        if (!copyDirectory($src, $dst))
+            elog(ERROR, "Could not copy '%s'", $dst);
 
-		$src = joinPathComponents($installDir, "html/pg_stats_reporter/".$fileName);
-		$dst = joinPathComponents($outputDir, $fileName);
+    }
 
-		/* check whether or not the target directory exists */
-		if (!file_exists($src))
-			elog(ERROR, "Could not copy '%s' : No such file or directory", $src);
+    /* copy files in package list */
+    foreach ($copyPackageList['file'] as $fileName) {
 
-		/* check whether or not the same name directory exists */
-		if (file_exists($dst)) {
-			if (!(filetype($dst) === "file"))
-				elog(ERROR, "Could not copy '%s' : Directory exists", $dst);
+        $src = joinPathComponents($installDir, "html/pg_stats_reporter/" . $fileName);
+        $dst = joinPathComponents($outputDir, $fileName);
 
-			/* if target file exists already, then continue */
-			continue;
-		}
+        /* check whether or not the target directory exists */
+        if (!file_exists($src))
+            elog(ERROR, "Could not copy '%s' : No such file or directory", $src);
 
-		/* copy file */
-		if (!copy($src, $dst))
-			elog(ERROR, "Could not copy '%s'", $dst);
-	}
+        /* check whether or not the same name directory exists */
+        if (file_exists($dst)) {
+            if (!(filetype($dst) === "file"))
+                elog(ERROR, "Could not copy '%s' : Directory exists", $dst);
+
+            /* if target file exists already, then continue */
+            continue;
+        }
+
+        /* copy file */
+        if (!copy($src, $dst))
+            elog(ERROR, "Could not copy '%s'", $dst);
+    }
 }
 
 /* Copy library file */
 function copyDirectory($srcDir, $dstDir)
 {
-	$dir = opendir($srcDir);
-	if (!$dir)
-		return false;
+    $dir = opendir($srcDir);
+    if (!$dir)
+        return false;
 
-	while (($entry=readdir($dir)) !== false) {
-		if (strcmp($entry,".") == 0 || strcmp($entry,"..") == 0) {
-			continue;
-		}
-		$src = joinPathComponents($srcDir, $entry);
-		$dst = joinPathComponents($dstDir, $entry);
+    while (($entry = readdir($dir)) !== false) {
+        if (strcmp($entry, ".") == 0 || strcmp($entry, "..") == 0) {
+            continue;
+        }
+        $src = joinPathComponents($srcDir, $entry);
+        $dst = joinPathComponents($dstDir, $entry);
 
-		if (is_dir($src)) {
-			if (!file_exists($dst))
-				mkdir($dst);
-			if (!copyDirectory($src, $dst))
-				return false;
-		} else {
-			if (!is_file($dst)) {
-				if (!copy($src, $dst))
-					return false;
-			}
-		}
-	}
-	return true;
+        if (is_dir($src)) {
+            if (!file_exists($dst))
+                mkdir($dst);
+            if (!copyDirectory($src, $dst))
+                return false;
+        } else {
+            if (!is_file($dst)) {
+                if (!copy($src, $dst))
+                    return false;
+            }
+        }
+    }
+    return true;
 }
 
 /* Create Smarty instance */
 function createSmartyInstance($installDir, $outputdir, $tmpDir)
 {
-	$smarty = new Smarty();
+    $smarty = new Smarty();
 
-	/* Set each directory */
-	$smarty->caching = Smarty::CACHING_OFF;
-	$smarty->compile_check  = false;
-	$smarty->template_dir   = joinPathComponents($installDir, "pg_stats_reporter_lib/template");
-	$smarty->compile_dir    = $tmpDir."/compiled";
+    /* Set each directory */
+    $smarty->caching = Smarty::CACHING_OFF;
+    $smarty->compile_check = false;
+    $smarty->template_dir = joinPathComponents($installDir, "pg_stats_reporter_lib/template");
+    $smarty->compile_dir = $tmpDir . "/compiled";
 
-	/* Assign library path */
-	$smarty->assign("jquery_path", JQUERY_PATH);
-	$smarty->assign("jquery_ui_path", JQUERYUI_PATH);
-	$smarty->assign("timepicker_path", TIMEPICKER_PATH);
-	$smarty->assign("tablesorter_path", TABLESORTER_PATH);
-	$smarty->assign("superfish_path", SUPERFISH_PATH);
-	$smarty->assign("jqplot_path", JQPLOT_PATH);
-	$smarty->assign("dygraphs_path", DYGRAPHS_PATH);
+    /* Assign library path */
+    $smarty->assign("jquery_path", JQUERY_PATH);
+    $smarty->assign("jquery_ui_path", JQUERYUI_PATH);
+    $smarty->assign("timepicker_path", TIMEPICKER_PATH);
+    $smarty->assign("tablesorter_path", TABLESORTER_PATH);
+    $smarty->assign("superfish_path", SUPERFISH_PATH);
+    $smarty->assign("jqplot_path", JQPLOT_PATH);
+    $smarty->assign("dygraphs_path", DYGRAPHS_PATH);
 
-	/* Assign pg_stats_reporter version */
-	$smarty->assign("program_version", PROGRAM_VERSION);
+    /* Assign pg_stats_reporter version */
+    $smarty->assign("program_version", PROGRAM_VERSION);
 
-	return $smarty;
+    return $smarty;
 }
 
 /* get language */
 function getLanguage($infoData, $repositorydb)
 {
-	$language = NULL;
+    $language = NULL;
 
-	if (isset($repositorydb)) {
-		$language = $infoData[$repositorydb]["language"];
-	} else {
-		$first = reset($infoData);
-		$language = $first["language"];
-	}
+    if (isset($repositorydb)) {
+        $language = $infoData[$repositorydb]["language"];
+    } else {
+        $first = reset($infoData);
+        $language = $first["language"];
+    }
 
-	if ($language == "auto")
-		$language = getenv("LANG");
+    if ($language == "auto")
+        $language = getenv("LANG");
 
-	return $language;
+    return $language;
 }
 
 /* delete directory for command line mode */
 function deleteDirectory($dir)
 {
-	if (!($dirp = opendir($dir)))
-		return false;
+    if (!($dirp = opendir($dir)))
+        return false;
 
-	while ($entry = readdir($dirp)) {
-		if ($entry == '.' || $entry == '..')
-			continue;
+    while ($entry = readdir($dirp)) {
+        if ($entry == '.' || $entry == '..')
+            continue;
 
-		$fileStr = joinPathComponents($dir, $entry);
-		if (is_file($fileStr)) {
-			unlink($fileStr);
-		} else {
-			if (!deleteDirectory($fileStr))
-				return false;
-		}
-	}
-	closedir($dirp);
+        $fileStr = joinPathComponents($dir, $entry);
+        if (is_file($fileStr)) {
+            unlink($fileStr);
+        } else {
+            if (!deleteDirectory($fileStr))
+                return false;
+        }
+    }
+    closedir($dirp);
 
-	rmdir($dir);
-	return true;
+    rmdir($dir);
+    return true;
 }
 
 /* Display Monitored Database List */
 function displayMonitoredDatabaseList($infoData, $repository_name)
 {
-	$target_db_list = array();
+    $target_db_list = array();
 
-	/* Prepare list of repository DB and monitored DB */
-	//if (isset($repository_name)) {
-		//if (array_key_exists("monitor", $infoData[$repository_name]))
-	if (isset($repository_name)) {
-		/* if connection could not be established already, do not input target connection list */
-		if (count($infoData[$repository_name]) == 0)
-			exit(1);
-		if (array_key_exists("monitor", $infoData[$repository_name]))
-			$target_db_list[$repository_name] = $infoData[$repository_name]['monitor'];
-	} else {
-		foreach ($infoData as $key => $val) {
-			/* if connection could not be established already, do not input target connection list */
-			if (count($val) == 0)
-				continue;
-			if (array_key_exists("monitor", $val))
-				$target_db_list[$key] = $val['monitor'];
-		}
-	}
+    /* Prepare list of repository DB and monitored DB */
+    //if (isset($repository_name)) {
+    //if (array_key_exists("monitor", $infoData[$repository_name]))
+    if (isset($repository_name)) {
+        /* if connection could not be established already, do not input target connection list */
+        if (count($infoData[$repository_name]) == 0)
+            exit(1);
+        if (array_key_exists("monitor", $infoData[$repository_name]))
+            $target_db_list[$repository_name] = $infoData[$repository_name]['monitor'];
+    } else {
+        foreach ($infoData as $key => $val) {
+            /* if connection could not be established already, do not input target connection list */
+            if (count($val) == 0)
+                continue;
+            if (array_key_exists("monitor", $val))
+                $target_db_list[$key] = $val['monitor'];
+        }
+    }
 
-	/* Display title */
-	echo str_repeat("-", 40)."\n";
-	echo "Repository DB and Monitored DB List\n";
-	echo str_repeat("-", 40)."\n\n";
-	printf("%-20s  %6s  %-35s\n", "Repository DB", "InstID", "Host:Port");
-	echo str_repeat("-", 65)."\n";
+    /* Display title */
+    echo str_repeat("-", 40) . "\n";
+    echo "Repository DB and Monitored DB List\n";
+    echo str_repeat("-", 40) . "\n\n";
+    printf("%-20s  %6s  %-35s\n", "Repository DB", "InstID", "Host:Port");
+    echo str_repeat("-", 65) . "\n";
 
-	/* Display repository DB and monitored DB */
-	foreach ($target_db_list as $section => $item) {
-		if (count($item) == 0)
-			continue;
-		foreach ($item as $instid => $monitor_info) {
-			printf("%-20s  %6s  %-35s\n", $section, $instid, $monitor_info);
-		}
-	}
+    /* Display repository DB and monitored DB */
+    foreach ($target_db_list as $section => $item) {
+        if (count($item) == 0)
+            continue;
+        foreach ($item as $instid => $monitor_info) {
+            printf("%-20s  %6s  %-35s\n", $section, $instid, $monitor_info);
+        }
+    }
 }
 
 /* Display snapshot list */
 function displaySnapshotList($infoData, $instid, $repository_name)
 {
-	global $query_string;
-	$target_connection_string = array();
-	$format_list = array("%6s  ","%6s  ", "%-32s  ", "%5s  ", "%-19s  ", "%-20s\n");
+    global $query_string;
+    $target_connection_string = array();
+    $format_list = array("%6s  ", "%6s  ", "%-32s  ", "%5s  ", "%-19s  ", "%-20s\n");
 
-	/* Prepare list of connection info to repositorydb */
-	if (isset($repository_name)) {
-		/* if connection could not be established already, do not input target connection list */
-		if (count($infoData[$repository_name]) == 0)
-			exit(1);
-		$target_connection_string[$repository_name] = $infoData[$repository_name]['connect_str'];
-	} else {
-		foreach ($infoData as $key => $val) {
-			/* if connection could not be established already, do not input target connection list */
-			if (count($val) == 0)
-				continue;
-			$target_connection_string[$key] = $val['connect_str'];
-		}
-	}
+    /* Prepare list of connection info to repositorydb */
+    if (isset($repository_name)) {
+        /* if connection could not be established already, do not input target connection list */
+        if (count($infoData[$repository_name]) == 0)
+            exit(1);
+        $target_connection_string[$repository_name] = $infoData[$repository_name]['connect_str'];
+    } else {
+        foreach ($infoData as $key => $val) {
+            /* if connection could not be established already, do not input target connection list */
+            if (count($val) == 0)
+                continue;
+            $target_connection_string[$key] = $val['connect_str'];
+        }
+    }
 
-	/* If instid specified, add the string that specifies the ID */
-	if (isset($instid)) {
-		$query_string['snapshotlist'] .= " WHERE s.instid = $instid";
-	}
-	$query_string['snapshotlist'] .= " ORDER BY s.snapid ASC";
+    /* If instid specified, add the string that specifies the ID */
+    if (isset($instid)) {
+        $query_string['snapshotlist'] .= " WHERE s.instid = $instid";
+    }
+    $query_string['snapshotlist'] .= " ORDER BY s.snapid ASC";
 
-	/* Display title */
-	echo str_repeat( "-" , 40 )."\n";
-	echo "Snapshot List\n";
-	echo str_repeat( "-" , 40 )."\n";
+    /* Display title */
+    echo str_repeat("-", 40) . "\n";
+    echo "Snapshot List\n";
+    echo str_repeat("-", 40) . "\n";
 
-	/* Get and display the snapshot for each repositorydb */
-	foreach ($target_connection_string as $key => $val) {
+    /* Get and display the snapshot for each repositorydb */
+    foreach ($target_connection_string as $key => $val) {
 
-		if (!($conn = @pg_connect($val))) {
-			elog(WARNING, "Connection error.(repository database = %s)", $key);
-			continue;
-		}
+        if (!($conn = @pg_connect($val))) {
+            elog(WARNING, "Connection error.(repository database = %s)", $key);
+            continue;
+        }
 
-		/* Display repositorydb name */
-		echo "\n[".$key."]\n\n";
+        /* Display repositorydb name */
+        echo "\n[" . $key . "]\n\n";
 
-		$result = pg_query($conn, $query_string['snapshotlist']);
+        $result = pg_query($conn, $query_string['snapshotlist']);
 
-		for ($i = 0 ; $i < pg_num_fields($result) ; $i++) {
-			printf($format_list[$i], pg_field_name($result, $i));
-		}
+        for ($i = 0; $i < pg_num_fields($result); $i++) {
+            printf($format_list[$i], pg_field_name($result, $i));
+        }
 
-		echo str_repeat( "-" , 99 )."\n";
+        echo str_repeat("-", 99) . "\n";
 
-		for ($i = 0 ; $i < pg_num_rows($result) ; $i++ ) {
-			for ($j = 0 ; $j < pg_num_fields($result) ; $j++ ) {
-				printf($format_list[$j], pg_fetch_result($result, $i, $j));
-			}
-		}
+        for ($i = 0; $i < pg_num_rows($result); $i++) {
+            for ($j = 0; $j < pg_num_fields($result); $j++) {
+                printf($format_list[$j], pg_fetch_result($result, $i, $j));
+            }
+        }
 
-		pg_free_result($result);
-		pg_close($conn);
-	}
+        pg_free_result($result);
+        pg_close($conn);
+    }
 }
 
 /* display information about size of snapshot */
 function displaySnapshotSize($infoData, $repository_name)
 {
-	global $query_string;
-	$target_connection_string = array();
+    global $query_string;
+    $target_connection_string = array();
 
-	/* Prepare list of connection info to repositorydb */
-	if (isset($repository_name)) {
-		/* if connection could not be established already, exit this script */
-		if (count($infoData[$repository_name]) == 0)
-			exit(1);
-		$target_connection_string[$repository_name] = $infoData[$repository_name]['connect_str'];
-	} else {
-		foreach ($infoData as $key => $val) {
-			/* if connection could not be established already, do not input target connection list */
-			if (count($val) == 0)
-				continue;
-			$target_connection_string[$key] = $val['connect_str'];
-		}
-	}
+    /* Prepare list of connection info to repositorydb */
+    if (isset($repository_name)) {
+        /* if connection could not be established already, exit this script */
+        if (count($infoData[$repository_name]) == 0)
+            exit(1);
+        $target_connection_string[$repository_name] = $infoData[$repository_name]['connect_str'];
+    } else {
+        foreach ($infoData as $key => $val) {
+            /* if connection could not be established already, do not input target connection list */
+            if (count($val) == 0)
+                continue;
+            $target_connection_string[$key] = $val['connect_str'];
+        }
+    }
 
-	/* Display title */
-	echo str_repeat( "-" , 40 )."\n";
-	echo "Snapshot Size Information\n";
-	echo str_repeat( "-" , 40 )."\n";
+    /* Display title */
+    echo str_repeat("-", 40) . "\n";
+    echo "Snapshot Size Information\n";
+    echo str_repeat("-", 40) . "\n";
 
-	/* Get and display the snapshot for each repositorydb */
-	foreach ($target_connection_string as $key => $val) {
+    /* Get and display the snapshot for each repositorydb */
+    foreach ($target_connection_string as $key => $val) {
 
-		$totalSize = 0;
+        $totalSize = 0;
 
-		/* Display ripositorydb name */
-		echo "\n[".$key."]\n\n";
+        /* Display ripositorydb name */
+        echo "\n[" . $key . "]\n\n";
 
-		if (!($conn = @pg_connect($val))) {
-			elog(WARNING, "Connection error.(repository database = %s)", $key);
-			continue;
-		}
+        if (!($conn = @pg_connect($val))) {
+            elog(WARNING, "Connection error.(repository database = %s)", $key);
+            continue;
+        }
 
-		$result = pg_query($conn, $query_string['snapshotsize']);
+        $result = pg_query($conn, $query_string['snapshotsize']);
 
-		for ($i = 0 ; $i < pg_num_rows($result) ; $i++ ) {
-			$size = pg_fetch_result($result, $i, 5);
-			if (!$size)
-				$size = 0;
+        for ($i = 0; $i < pg_num_rows($result); $i++) {
+            $size = pg_fetch_result($result, $i, 5);
+            if (!$size)
+                $size = 0;
 
-			printf("Instance ID                : %s\n", pg_fetch_result($result, $i, 0));
-			printf("Database System ID         : %s\n", pg_fetch_result($result, $i, 1));
-			printf("Host                       : %s\n", pg_fetch_result($result, $i, 2));
-			printf("Port                       : %s\n", pg_fetch_result($result, $i, 3));
-			printf("Number Of Snapshots        : %s\n", pg_fetch_result($result, $i, 4));
-			printf("Snapshot Size              : %s\n", prettySize($size));
-			printf("Latest Snapshot ID         : %s\n", ($var = pg_fetch_result($result, $i, 6))? $var : "N/A");
-			printf("Latest Snapshot Timestamp  : %s\n\n", ($var = pg_fetch_result($result, $i, 7))? $var : "N/A");
+            printf("Instance ID                : %s\n", pg_fetch_result($result, $i, 0));
+            printf("Database System ID         : %s\n", pg_fetch_result($result, $i, 1));
+            printf("Host                       : %s\n", pg_fetch_result($result, $i, 2));
+            printf("Port                       : %s\n", pg_fetch_result($result, $i, 3));
+            printf("Number Of Snapshots        : %s\n", pg_fetch_result($result, $i, 4));
+            printf("Snapshot Size              : %s\n", prettySize($size));
+            printf("Latest Snapshot ID         : %s\n", ($var = pg_fetch_result($result, $i, 6)) ? $var : "N/A");
+            printf("Latest Snapshot Timestamp  : %s\n\n", ($var = pg_fetch_result($result, $i, 7)) ? $var : "N/A");
 
-			$totalSize += $size;
-		}
-		printf("Total Snapshot Size  : %s\n\n", prettySize($totalSize));
-		pg_free_result($result);
-		pg_close($conn);
-	}
+            $totalSize += $size;
+        }
+        printf("Total Snapshot Size  : %s\n\n", prettySize($totalSize));
+        pg_free_result($result);
+        pg_close($conn);
+    }
 }
 
 /* convert to formatting with size units */
 function prettySize($size)
 {
-	$limit = 10 * 1024;
-	$mult = 1;
+    $limit = 10 * 1024;
+    $mult = 1;
 
-	if ($size < ($limit * $mult)) {
-		$retSize = $size." bytes";
-	} else {
-		$mult *= 1024;
-		if ($size < ($limit * $mult)) {
-			$size = round($size / $mult);
-			$retSize = $size." KiB";
-		} else {
-			$mult *= 1024;
-			if ($size < ($limit * $mult)) {
-				$size = round($size / $mult);
-				$retSize = $size." MiB";
-			} else {
-				$mult *= 1024;
-				if ($size < ($limit * $mult)) {
-					$size = round($size / $mult);
-					 $retSize = $size." GiB";
-				} else {
-					$mult *= 1024;
-					$size = round($size / $mult);
-					$retSize = $size." TiB";
-				}
-			}
-		}
-	}
-	return $retSize;
+    if ($size < ($limit * $mult)) {
+        $retSize = $size . " bytes";
+    } else {
+        $mult *= 1024;
+        if ($size < ($limit * $mult)) {
+            $size = round($size / $mult);
+            $retSize = $size . " KiB";
+        } else {
+            $mult *= 1024;
+            if ($size < ($limit * $mult)) {
+                $size = round($size / $mult);
+                $retSize = $size . " MiB";
+            } else {
+                $mult *= 1024;
+                if ($size < ($limit * $mult)) {
+                    $size = round($size / $mult);
+                    $retSize = $size . " GiB";
+                } else {
+                    $mult *= 1024;
+                    $size = round($size / $mult);
+                    $retSize = $size . " TiB";
+                }
+            }
+        }
+    }
+    return $retSize;
 }
 
 /* Display Usage */
 function displayUsage()
 {
-        echo PROGRAM_NAME." version ".PROGRAM_VERSION."
+    echo PROGRAM_NAME . " version " . PROGRAM_VERSION . "
 Copyright (c) 2012-2018, NIPPON TELEGRAPH AND TELEPHONE CORPORATION
-Web site: ".PROGRAM_URL."
+Web site: " . PROGRAM_URL . "
 
-".PROGRAM_NAME." reports a PostgreSQL database.
+" . PROGRAM_NAME . " reports a PostgreSQL database.
 
 Usage:
-  ".PROGRAM_NAME." [-R DBNAME] [-i INSTANCEID] [-a] [-O DIRECTORY]
+  " . PROGRAM_NAME . " [-R DBNAME] [-i INSTANCEID] [-a] [-O DIRECTORY]
                     [-b SNAPID] [-e SNAPID] [-B DATE] [-E DATE]
-  ".PROGRAM_NAME." -l [-R DBNAME] [-i INSTANCEID]
-  ".PROGRAM_NAME." -L [-R DBNAME]
-  ".PROGRAM_NAME." -s [-R DBNAME]
-  ".PROGRAM_NAME." --index [-O DIRECTORY]
+  " . PROGRAM_NAME . " -l [-R DBNAME] [-i INSTANCEID]
+  " . PROGRAM_NAME . " -L [-R DBNAME]
+  " . PROGRAM_NAME . " -s [-R DBNAME]
+  " . PROGRAM_NAME . " --index [-O DIRECTORY]
 
 General options:
   -l, --list                show the snapshot list
@@ -1193,12 +1193,13 @@ Generic options:
 
 ";
 }
+
 /* Display version */
 function displayVersion()
 {
-        echo PROGRAM_NAME." version ".PROGRAM_VERSION."
+    echo PROGRAM_NAME . " version " . PROGRAM_VERSION . "
 Copyright (c) 2012-2018, NIPPON TELEGRAPH AND TELEPHONE CORPORATION
-Web site: ".PROGRAM_URL."
+Web site: " . PROGRAM_URL . "
 ";
 }
 
@@ -1212,24 +1213,25 @@ Web site: ".PROGRAM_URL."
 */
 function elog()
 {
-	$params = func_get_args();
+    $params = func_get_args();
 
-	$elevel = array_shift($params);	/* 1st argument */
-	$format = array_shift($params);	/* 2nd argument */
+    $elevel = array_shift($params);    /* 1st argument */
+    $format = array_shift($params);    /* 2nd argument */
 
-	$message = vsprintf($format, $params);
+    $message = vsprintf($format, $params);
 
-	/* Output a message */
-	switch ($elevel) {
-		case LOG:
-			fprintf(STDOUT, "[LOG] ".$message."\n");
-			break;
-		case WARNING:
-	 		fprintf(STDERR, "[WARNING] ".$message."\n");
-			break;
-		case ERROR:
-			fprintf(STDERR, "[ERROR] ".$message."\n");
-			exit(1);
-	}
+    /* Output a message */
+    switch ($elevel) {
+        case LOG:
+            fprintf(STDOUT, "[LOG] " . $message . "\n");
+            break;
+        case WARNING:
+            fprintf(STDERR, "[WARNING] " . $message . "\n");
+            break;
+        case ERROR:
+            fprintf(STDERR, "[ERROR] " . $message . "\n");
+            exit(1);
+    }
 }
+
 ?>
