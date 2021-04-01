@@ -403,7 +403,7 @@ if ($optionInfo["list"]) {
             // output file
             if (!($fp = fopen($filepath, "w")))
                 elog(ERROR, "Could not create report file");
-            if (fwrite($fp, $smarty->fetch("pg_stats_reporter.tpl")) == false)
+            if (fwrite($fp, $smarty->fetch($optionInfo['onlybody'] == true ? "pg_stats_reporter_onlybody.tpl" : "pg_stats_reporter.tpl")) == false)
                 elog(ERROR, "Could not create report file");
             fclose($fp);
 
@@ -513,6 +513,7 @@ function parseCommandOptions(&$optionInfo)
                 case "dblist":
                 case "size":
                 case "index":
+                case "onlybody":
                 case "all":
                     $optionInfo[$opt_array[0]] = true;
                     break;
