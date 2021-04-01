@@ -11,7 +11,7 @@ define("PROGRAM_VERSION", "10.0");
 define("PROGRAM_URL", "http://pgstatsinfo.sourceforge.net/");
 
 define("CONFIG_FILE", "/etc/pg_stats_reporter.ini");
-define("LOCAL_CONFIG_FILE", "./pg_stats_reporter.ini");
+define("LOCAL_CONFIG_FILE", __DIR__ . "/pg_stats_reporter.ini");
 define("GLOBAL_SECTION", "global_setting");
 define("INSTALL_DIR", "install_directory");
 define("LOG_PAGE_SIZE", "log_page_size");
@@ -200,7 +200,7 @@ if (!mkdir(joinPathComponents($tmpdir, "compiled"), 0755, false))
 $config_cache_file = joinPathComponents($tmpdir, "cache/pg_stats_reporter.ini");
 // read global setting from pg_stats_reporter.ini
 $infoData = readGlobalSettingForCommandline($globalSetting);
-$installDir = $globalSetting[INSTALL_DIR];
+$installDir = __DIR__ . '/' . $globalSetting[INSTALL_DIR];
 
 // require submodule
 $include_files =
