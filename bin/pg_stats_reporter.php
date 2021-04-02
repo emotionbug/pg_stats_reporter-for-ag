@@ -213,8 +213,7 @@ $installDir = __DIR__ . '/' . $globalSetting[INSTALL_DIR];
 // require submodule
 $include_files =
     array("define.php", "common.php",
-        "make_report.php", "make_report_plans.php",
-        "make_report_list.php");
+        "make_report.php", "make_report_plans.php");
 $module_path =
     joinPathComponents($installDir, "pg_stats_reporter_lib/module");
 
