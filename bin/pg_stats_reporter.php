@@ -10,7 +10,6 @@ define("PROGRAM_NAME", "pg_stats_reporter");
 define("PROGRAM_VERSION", "10.0");
 define("PROGRAM_URL", "http://pgstatsinfo.sourceforge.net/");
 
-define("CONFIG_FILE", "/etc/pg_stats_reporter.ini");
 define("LOCAL_CONFIG_FILE", __DIR__ . "/pg_stats_reporter.ini");
 define("GLOBAL_SECTION", "global_setting");
 define("INSTALL_DIR", "install_directory");
@@ -50,7 +49,13 @@ $optionInfo = array("list" => false,
     "begindate" => NULL,
     "enddate" => NULL,
     "outputdir" => NULL,
-    "onlybody" => NULL);
+    "onlybody" => NULL,
+    "host" => NULL,
+    "port" => NULL,
+    "dbname" => NULL,
+    "username" => NULL,
+    "password" => NULL
+);
 $optionList = array("l" => "list",
     "L" => "dblist",
     "s" => "size",
@@ -137,7 +142,12 @@ $combinationCheckList = array("list" => array("dblist",
     "outputdir" => array("list",
         "dblist",
         "size"),
-    "onlybody" => array());
+    "onlybody" => array(),
+    "host" => array(),
+    "port" => array(),
+    "dbname" => array(),
+    "username" => array(),
+    "password" => array());
 
 /* setup signal handlers */
 if (PHP_OS == "Linux") {
@@ -167,8 +177,6 @@ if (!isset($optionInfo["outputdir"]))
 
 // create output directory
 if (!is_dir($optionInfo["outputdir"])) {
-    if ($optionInfo["index"])
-        elog(ERROR, "Output directory not exists: '%s'", $optionInfo["outputdir"]);
     if (!mkdir($optionInfo["outputdir"], 0755, true))
         elog(ERROR, "Could not create output directory: '%s'", $optionInfo["outputdir"]);
 }
@@ -183,18 +191,18 @@ if (!is_dir($tmpTopdir)) {
 
 $tmpfile = tempnam($tmpTopdir, "");
 $tmpdir = $tmpfile . "tmp";
-if (!mkdir($tmpdir, 0755, false))
+if (!mkdir($tmpdir, 0755))
     elog(ERROR, "Could not create temporary directory: '%s'", $tmpdir);
 
 // register a function to be executed at the end of this script
 register_shutdown_function("cleanTemporaryDirectory", $tmpTopdir, $tmpdir, $tmpfile);
 
 // create cache directory
-if (!mkdir(joinPathComponents($tmpdir, "cache"), 0755, false))
+if (!mkdir(joinPathComponents($tmpdir, "cache"), 0755))
     elog(ERROR, "Could not create directory: '%s'", joinPathComponents($tmpdir, "cache"));
 
 // create compiled directory
-if (!mkdir(joinPathComponents($tmpdir, "compiled"), 0755, false))
+if (!mkdir(joinPathComponents($tmpdir, "compiled"), 0755))
     elog(ERROR, "Could not create directory: '%s'", joinPathComponents($tmpdir, "compiled"));
 
 $config_cache_file = joinPathComponents($tmpdir, "cache/pg_stats_reporter.ini");
@@ -288,17 +296,13 @@ if ($optionInfo["list"]) {
 
     // display snapshot size infomation
     displaySnapshotSize($infoData, $optionInfo["repositorydb"]);
-} else if ($optionInfo["index"]) {
-    // TODO: if you use message_file, read it here
-
-    // create a HTML report list
-    makeReportList($optionInfo["outputdir"]);
 } else {
-    // copy library file
-    copyLibraryFile($installDir, $optionInfo['outputdir']);
-
+    if ($optionInfo["onlybody"] != true) {
+        // copy library file
+        copyLibraryFile($installDir, $optionInfo['outputdir']);
+    }
     // create Smarty instance
-    $smarty = createSmartyInstance($installDir, $optionInfo["outputdir"], $tmpdir);
+    $smarty = createSmartyInstance($installDir, $tmpdir);
 
     // set report period
     $target_data = array();
@@ -410,15 +414,11 @@ if ($optionInfo["list"]) {
             fclose($fp);
 
             // display message
-            elog(LOG, "Report file created: %s", $filename);
+            elog(LOG, "%s", $filename);
             $reportNum++;
         }
         // disconnect database
         pg_close($conn);
-
-        // creat a HTML report list
-        if ($reportNum > 0)
-            makeReportList($optionInfo["outputdir"]);
     }
 }
 
@@ -458,7 +458,7 @@ function joinPathComponents($pathStr, $addPath)
     if (strcmp(substr($pathStr, -1), "/") != 0)
         $pathStr .= "/";
 
-    return $pathStr .= $addPath;
+    return $pathStr . $addPath;
 }
 
 /* check option combination */
@@ -579,15 +579,12 @@ function readGlobalSettingForCommandline(&$global_setting)
 {
     global $global_setting_list;
 
-    $ini_data = array();
     $err_msg = array();
     $config_file = "";
 
     /* select reading pg_stats_reporter.ini */
     if (is_file(LOCAL_CONFIG_FILE)) {
         $config_file = LOCAL_CONFIG_FILE;
-    } else if (is_file(CONFIG_FILE)) {
-        $config_file = CONFIG_FILE;
     } else {
         elog(ERROR, "pg_stats_reporter.ini not found.");
     }
@@ -636,7 +633,6 @@ function initInformationFileForCommandline($infoData, &$err_msg, $config_cache_f
 
     $err_msg = array();
     $cache_contents = array();
-    $setting = $report_default;
 
     // exclude "global" section
     assert(array_key_exists(GLOBAL_SECTION, $infoData));
@@ -878,7 +874,7 @@ function copyDirectory($srcDir, $dstDir)
 }
 
 /* Create Smarty instance */
-function createSmartyInstance($installDir, $outputdir, $tmpDir)
+function createSmartyInstance($installDir, $tmpDir)
 {
     $smarty = new Smarty();
 
@@ -886,8 +882,7 @@ function createSmartyInstance($installDir, $outputdir, $tmpDir)
     $smarty->caching = Smarty::CACHING_OFF;
     $smarty->compile_check = false;
     $smarty->setTemplateDir(joinPathComponents($installDir, "pg_stats_reporter_lib/template"));
-    $smarty->setCompileDir('/tmp/smarty/compiled');
-//    $smarty->compile_dir = $tmpDir . "/compiled";
+    $smarty->setCompileDir($tmpDir . "/compiled");
 
     /* Assign library path */
     $smarty->assign("jquery_path", JQUERY_PATH);
@@ -1162,13 +1157,11 @@ Usage:
   " . PROGRAM_NAME . " -l [-R DBNAME] [-i INSTANCEID]
   " . PROGRAM_NAME . " -L [-R DBNAME]
   " . PROGRAM_NAME . " -s [-R DBNAME]
-  " . PROGRAM_NAME . " --index [-O DIRECTORY]
 
 General options:
   -l, --list                show the snapshot list
   -L, --dblist              show repository DB and monitored DB list
   -s, --size                show the snapshot size
-  --index                   create a HTML report list
   -a, --all                 create a complete report that has all items
   -R, --repositorydb=DBNAME repository DB name
                             (section name in pg_stats_reporter.ini;
@@ -1225,7 +1218,7 @@ function elog()
     /* Output a message */
     switch ($elevel) {
         case LOG:
-            fprintf(STDOUT, "[LOG] " . $message . "\n");
+            fprintf(STDOUT, $message);
             break;
         case WARNING:
             fprintf(STDERR, "[WARNING] " . $message . "\n");

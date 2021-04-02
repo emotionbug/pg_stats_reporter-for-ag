@@ -25,19 +25,9 @@ define("DYGRAPHS_PATH", "package/dygraphs-2.1.0/");
 define("V23", 20300);
 define("V10", 100000);
 
-// Smarty cache, compile, template directory
-define("CACHE_DIR", "../../pg_stats_reporter_lib/cache");
-define("COMPILE_DIR", "../../pg_stats_reporter_lib/compiled");
-define("TEMPLATE_DIR", "../../pg_stats_reporter_lib/template");
-define("CACHE_LIFETIME", 300);
-define("TEMPLATE_FILE", "pg_stats_reporter.tpl");
-define("LOG_VIEWER_TEMPLATE_FILE", "log_viewer.tpl");
-
 // configuration file
-define("CONFIG_DIR", "/etc");
 define("CONFIG_CACHE_DIR", "../../pg_stats_reporter_lib/cache");
 define("CONFIG_FILENAME", "pg_stats_reporter.ini");
-define("CONFIG_FILE", CONFIG_DIR . "/" . CONFIG_FILENAME);
 define("CONFIG_CACHE_FILE", CONFIG_CACHE_DIR . "/" . CONFIG_FILENAME);
 define("GLOBAL_SECTION", "global_setting");
 
@@ -335,5 +325,3 @@ $query_string = array(
     "log" =>
         "SELECT to_char(timestamp, 'YYYY-MM-DD HH24:MI:SS.MS') AS timestamp, username, database, pid, client_addr, session_id, session_line_num, ps_display, to_char(session_start, 'YYYY-MM-DD HH24:MI:SS.MS') AS session_start, vxid, xid, elevel, sqlstate, message, detail, hint, query, query_pos, context, user_query, user_query_pos, location, application_name FROM statsrepo.log WHERE instid = $1 AND timestamp BETWEEN $2 AND $3"
 );
-
-?>
