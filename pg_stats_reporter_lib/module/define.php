@@ -5,9 +5,6 @@
  * Copyright (c) 2012-2018, NIPPON TELEGRAPH AND TELEPHONE CORPORATION
  */
 
-// pg_stats_reporter's version
-define("PROGRAM_VERSION", "10.0");
-
 // Library path
 define("SMARTY_PATH", "package/smarty-3.1.39/libs/");
 define("JQUERY_PATH", "package/jquery-3.2.1.min.js");
@@ -23,9 +20,6 @@ define("V23", 20300);
 define("V10", 100000);
 
 // configuration file
-define("CONFIG_CACHE_DIR", "../../pg_stats_reporter_lib/cache");
-define("CONFIG_FILENAME", "pg_stats_reporter.ini");
-define("GLOBAL_SECTION", "global_setting");
 
 // message file
 define("MESSAGE_PREFIX", "message_");

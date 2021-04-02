@@ -1589,8 +1589,6 @@ EOD;
 EOD;
         $result = pg_query_params($conn, $query_string['replication_delays'], $snapids);
         if (!$result) {
-            if ($result)
-                pg_free_result($result);
             return $htmlString . makeErrorTag($errorMsg['query_error'], pg_last_error($conn));
         }
         if (pg_num_rows($result) == 0) {
@@ -2504,5 +2502,3 @@ function makeFullstringDialog($header, $qstr, $isQuery)
     return $htmlSubStr;
 
 }
-
-?>

@@ -185,7 +185,7 @@ if (!is_dir($optionInfo["outputdir"])) {
 $tmpTopdir = joinPathComponents($optionInfo["outputdir"], "tmp");
 $tmpCreated = !is_dir($tmpTopdir);
 if (!is_dir($tmpTopdir)) {
-    if (!mkdir($tmpTopdir, 0755, false))
+    if (!mkdir($tmpTopdir, 0755))
         elog(ERROR, "Could not create temporary directory: '%s'", $tmpTopdir);
 }
 

@@ -214,5 +214,3 @@ function createPlanRow(&$htmlString, $childHtmlString, $rowData)
     $htmlString .= "</tbody></table></td>\n";
     $htmlString .= "</tr>\n\n";
 }
-
-?>
