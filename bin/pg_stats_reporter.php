@@ -54,7 +54,9 @@ $optionInfo = array("list" => false,
     "port" => NULL,
     "dbname" => NULL,
     "username" => NULL,
-    "password" => NULL
+    "password" => NULL,
+    "resprefix" => "",
+    "inline" => NULL,
 );
 $optionList = array("l" => "list",
     "L" => "dblist",
@@ -147,7 +149,10 @@ $combinationCheckList = array("list" => array("dblist",
     "port" => array(),
     "dbname" => array(),
     "username" => array(),
-    "password" => array());
+    "password" => array(),
+    "resprefix" => array(),
+    "inline" => array(),
+);
 
 /* setup signal handlers */
 if (PHP_OS == "Linux") {
@@ -383,6 +388,11 @@ if ($optionInfo["list"]) {
                 continue;
             }
 
+
+            if (isset($optionInfo['resprefix']))
+                define("RESOURCE_PREFIX", $optionInfo['resprefix']);
+            else
+                define("RESOURCE_PREFIX", '');
             // make report
             $html_string = makeReportForCommandline($conn, $infoData, $target_data, $snapids);
             pg_query("COMMIT");
@@ -396,25 +406,30 @@ if ($optionInfo["list"]) {
             $smarty->assign("left_menu", $html_string["left_menu"]);
             $smarty->assign("contents", $html_string["contents"]);
 
+            $page_result = $smarty->fetch($optionInfo['onlybody'] == true ? "pg_stats_reporter_onlybody.tpl" : "pg_stats_reporter.tpl");
+            if (isset($optionInfo['inline']) && $optionInfo['inline'] == true) {
+                echo $page_result;
+            } else {
+                // make report filename
+                $client = explode(":", $monitorstr);
+                $filename = $key . "_" . $client[0] . "_" . $client[1] . "_" . $monitorid . "_" . $snapdates[0] . "_" . $snapdates[1];
+                if ($optionInfo["all"] == true)
+                    $filename .= "_all";
+                $filename .= ".html";
+                $filepath = joinPathComponents($optionInfo['outputdir'], $filename);
 
-            // make report filename
-            $client = explode(":", $monitorstr);
-            $filename = $key . "_" . $client[0] . "_" . $client[1] . "_" . $monitorid . "_" . $snapdates[0] . "_" . $snapdates[1];
-            if ($optionInfo["all"] == true)
-                $filename .= "_all";
-            $filename .= ".html";
-            $filepath = joinPathComponents($optionInfo['outputdir'], $filename);
+                // output file
+                if (!($fp = fopen($filepath, "w")))
+                    elog(ERROR, "Could not create report file");
 
-            // output file
-            if (!($fp = fopen($filepath, "w")))
-                elog(ERROR, "Could not create report file");
-            if (fwrite($fp, $smarty->fetch($optionInfo['onlybody'] == true ? "pg_stats_reporter_onlybody.tpl" : "pg_stats_reporter.tpl")) == false)
-                elog(ERROR, "Could not create report file");
-            fclose($fp);
+                if (fwrite($fp, $page_result) == false)
+                    elog(ERROR, "Could not create report file");
+                fclose($fp);
 
-            // display message
-            elog(LOG, "%s", $filename);
-            $reportNum++;
+                // display message
+                elog(LOG, "%s", $filename);
+                $reportNum++;
+            }
         }
         // disconnect database
         pg_close($conn);
@@ -516,6 +531,7 @@ function parseCommandOptions(&$optionInfo)
                 case "index":
                 case "onlybody":
                 case "all":
+                case "inline":
                     $optionInfo[$opt_array[0]] = true;
                     break;
                 case "host":
@@ -530,6 +546,7 @@ function parseCommandOptions(&$optionInfo)
                 case "begindate":
                 case "enddate":
                 case "outputdir":
+                case "resprefix":
                     if (count($opt_array) == 2)
                         $optionInfo[$opt_array[0]] = $opt_array[1];
                     else {
@@ -875,6 +892,7 @@ function copyDirectory($srcDir, $dstDir)
 /* Create Smarty instance */
 function createSmartyInstance($installDir, $tmpDir)
 {
+    global $optionInfo;
     $smarty = new Smarty();
 
     /* Set each directory */
@@ -884,13 +902,13 @@ function createSmartyInstance($installDir, $tmpDir)
     $smarty->setCompileDir($tmpDir . "/compiled");
 
     /* Assign library path */
-    $smarty->assign("jquery_path", JQUERY_PATH);
-    $smarty->assign("jquery_ui_path", JQUERYUI_PATH);
-    $smarty->assign("timepicker_path", TIMEPICKER_PATH);
-    $smarty->assign("tablesorter_path", TABLESORTER_PATH);
-    $smarty->assign("superfish_path", SUPERFISH_PATH);
-    $smarty->assign("jqplot_path", JQPLOT_PATH);
-    $smarty->assign("dygraphs_path", DYGRAPHS_PATH);
+    $smarty->assign("jquery_path", $optionInfo['resprefix'] . JQUERY_PATH);
+    $smarty->assign("jquery_ui_path", $optionInfo['resprefix'] . JQUERYUI_PATH);
+    $smarty->assign("timepicker_path", $optionInfo['resprefix'] . TIMEPICKER_PATH);
+    $smarty->assign("tablesorter_path", $optionInfo['resprefix'] . TABLESORTER_PATH);
+    $smarty->assign("superfish_path", $optionInfo['resprefix'] . SUPERFISH_PATH);
+    $smarty->assign("jqplot_path", $optionInfo['resprefix'] . JQPLOT_PATH);
+    $smarty->assign("dygraphs_path", $optionInfo['resprefix'] . DYGRAPHS_PATH);
 
     /* Assign pg_stats_reporter version */
     $smarty->assign("program_version", PROGRAM_VERSION);

@@ -1765,10 +1765,10 @@ function makePagerHTML($id, $default)
 {
 
     $htmlString = "<div id=\"pager_" . $id . "\"><form>\n<img src=\""
-        . TABLESORTER_PATH . "addons/pager/icons/first.png\" class=\"first\"/>\n<img src=\""
-        . TABLESORTER_PATH . "addons/pager/icons/prev.png\" class=\"prev\"/>\n<input type=\"text\" class=\"pagedisplay\"/>\n<img src=\""
-        . TABLESORTER_PATH . "addons/pager/icons/next.png\" class=\"next\"/>\n<img src=\""
-        . TABLESORTER_PATH . "addons/pager/icons/last.png\" class=\"last\"/>\n";
+        . RESOURCE_PREFIX . TABLESORTER_PATH . "addons/pager/icons/first.png\" class=\"first\"/>\n<img src=\""
+        . RESOURCE_PREFIX . TABLESORTER_PATH . "addons/pager/icons/prev.png\" class=\"prev\"/>\n<input type=\"text\" class=\"pagedisplay\"/>\n<img src=\""
+        . RESOURCE_PREFIX . TABLESORTER_PATH . "addons/pager/icons/next.png\" class=\"next\"/>\n<img src=\""
+        . RESOURCE_PREFIX . TABLESORTER_PATH . "addons/pager/icons/last.png\" class=\"last\"/>\n";
 
     $htmlString .= "<select class=\"pagesize\">\n";
     switch ($default) {
